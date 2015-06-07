@@ -123,11 +123,7 @@ var editTask = function() {
         
         if (editInput.value != "") {
             span.textContent = editInput.value;
-        } else {
-            // If the user didn't write anything, then do nothing.
-            listItem.classList.toggle("edit");
-            return;
-        };
+        } else {};
     };
     
     listItem.classList.toggle("edit");
@@ -136,6 +132,16 @@ var editTask = function() {
 
 // End editTask
 
+// Begin delTask
+
+var delTask = function() {
+    var listItem = this.parentNode,
+        list = listItem.parentNode;
+    
+    list.removeChild(listItem);
+};
+
+// End delTask
+
 // Placeholders:
 var markTask = function() {};
-var delTask = function() {};
