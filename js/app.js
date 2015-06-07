@@ -72,6 +72,7 @@ var addTask = function() {
                 // Call the createTask function, then append the task to the list.
                 var listItem = createTask(newTask);
                 tasksList.appendChild(listItem);
+                addInput.value = "";
                 break;
         };
     };
