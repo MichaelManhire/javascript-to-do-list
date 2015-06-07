@@ -143,5 +143,25 @@ var delTask = function() {
 
 // End delTask
 
-// Placeholders:
-var markTask = function() {};
+// Begin markTask
+
+var markTask = function() {
+    
+    var listItem = this.parentNode,
+        currentList = listItem.parentNode,
+        editButton = listItem.querySelector["input[type=text]:first-of-type"];
+    
+    if (currentList == tasksList) {
+        /*  If the list item is currently on the tasks list,
+            then append it to the completed tasks list and remove the edit button. */
+        compTasksList.appendChild(listItem);
+        editButton.style.display = "none";
+    } else {
+        /*  If the list item is currently on the completed tasks list,
+            then append it to the tasks list and display the edit button again. */
+        tasksList.appendChild(listItem);
+        editButton.style.display = "inline-block";
+    };
+};
+
+// End markTask
