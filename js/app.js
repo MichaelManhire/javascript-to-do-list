@@ -19,6 +19,7 @@ var createTask = function(taskString) {
     // Add Attributes and Text to the Elements
     checkbox.type = "checkbox";
     editInput.type = "text";
+    editInput.style.display = "none";
     span.textContent = taskString;
     editButton.textContent = "Edit";
     delButton.textContent = "Delete";
@@ -32,8 +33,8 @@ var createTask = function(taskString) {
     listItem.appendChild(checkbox);
     listItem.appendChild(span);
     listItem.appendChild(editInput);
-    listItem.appendChild(delButton);
     listItem.appendChild(editButton);
+    listItem.appendChild(delButton);
     
     return listItem;
 }
@@ -44,12 +45,12 @@ var createTask = function(taskString) {
 
 var addTask = function() {
     
-    var error = document.createElement("p");
+    var newTask = addInput.value,
+        noInput = (newTask == ""),
+        error = document.createElement("p");
     error.id = "error";
     error.textContent = "Error: You forgot to enter a task!";
     
-    var newTask = addInput.value;
-    var noInput = (newTask == "");
     
     if (noInput && !checkError()) {
         /*  If the user didn't enter anything and there isn't currently an error message displayed,
@@ -94,8 +95,47 @@ var checkError = function() {
 
 // End checkError
 
+// Begin editTask
+
+var editTask = function() {
+    
+    var listItem = this.parentNode,
+        editInput = listItem.querySelector("input[type=text]"),
+        span = listItem.querySelector("span"),
+        editButton = listItem.querySelector("button:first-of-type"),
+        containsEditClass = listItem.classList.contains("edit");
+    
+    if (!containsEditClass) {
+        /*  If user clicks on edit button, 
+            then display the edit input. */
+        editInput.style.display = "inline-block";
+        editInput.value = span.textContent;
+        editInput.select();
+        span.style.display = "none";
+        editButton.textContent = "Save";
+        
+    } else {
+        /*  If the user clicks on the save button,
+            then replace the previous span text with whatever the user put into the edit input. */
+        editInput.style.display = "none";
+        editButton.textContent = "Edit";
+        span.style.display = "inline";
+        
+        if (editInput.value != "") {
+            span.textContent = editInput.value;
+        } else {
+            // If the user didn't write anything, then do nothing.
+            listItem.classList.toggle("edit");
+            return;
+        };
+    };
+    
+    listItem.classList.toggle("edit");
+    
+};
+
+// End editTask
 
 // Placeholders:
 var markTask = function() {};
-var editTask = function() {};
 var delTask = function() {};
